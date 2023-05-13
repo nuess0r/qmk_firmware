@@ -22,23 +22,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0x1209 // https://pid.codes/1209/
-#define PRODUCT_ID      0xC846 // made up
+#define VENDOR_ID       0x1209 /* https://pid.codes/1209/ */
+#define PRODUCT_ID      0xC846 /* made up */
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    Chad Austin
 #define PRODUCT         Wired Sculpt
 #define DESCRIPTION     Microsoft Sculpt Wired Conversion
 
-#define MATRIX_ROWS 8
-#define MATRIX_COLS 18
+#define MATRIX_ROWS 18
+#define MATRIX_COLS 8
 
-#define MATRIX_ROW_PINS {F5, F6, F7, A0, A1, A2, A3, A4}
-#define MATRIX_COL_PINS {A5, A6, A7, C7, C6, C5, C4, C3, C2, C1, C0, E1, E0, D7, D6, D5, D4, D3}
+/* Row on flex            A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   P   Q    R */
+#define MATRIX_ROW_PINS {A5, A6, A7, C7, C6, C5, C4, C3, C2, C1, C0, E1, E0, D7, D6, D5, D4, D3}
+/* Column on flex         3   2   1   8   7   6   5   4 */
+#define MATRIX_COL_PINS {F7, F6, F5, A4, A3, A2, A1, A0}
 #define DIP_SWITCH_PINS {F4}
 #define UNUSED_PINS {/*...*/}
 
+#define LED_GREEN_PIN B6
+#define LED_RED_PIN B7
+
+#define BACKLIGHT_PIN D2
+#define BACKLIGHT_LEVELS 1
+#define BACKLIGHT_LIMIT_VAL 194
+#define BACKLIGHT_DEFAULT_LEVEL 1
+
 /* COL2ROW or ROW2COL */
-#define DIODE_DIRECTION ROW2COL
+#define DIODE_DIRECTION COL2ROW
+
+#define DEBOUNCE_USE_FRAMES 1
 
 /*
  * I lived with no debouncing for a while, but phantom keypresses were common.
@@ -48,12 +60,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * "bhecause". This is under the Dvorak layout. Given this keyboard's 600 Hz
  * scan rate, 2 is insufficient anyway, because sometimes the elapsed time between
  * debounces rounds up to 2.
- * 
+ *
  * After adding debounce logging and painfully reproducing a "because" producing
  * "bhecause", I measured 4 ms on the phantom h keypress. Therefore, let's try
  * setting DEBOUNCE_DOWN to 4.
  */
-#define DEBOUNCE_DOWN 4
+#define DEBOUNCE_DOWN 1
 /*
  * Keyup latency is less perceptible unless phantom keys appear, so use
  * a longer debounce.
@@ -62,7 +74,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* define if matrix has ghost (lacks anti-ghosting diodes) */
 #define MATRIX_HAS_GHOST
-
 
 /*
  * Magic Key Options
@@ -85,16 +96,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LATENCY_MODE_PIN D2
 
 #if !LATENCY_MODE_ENABLE
-#define LED_CAPS_LOCK_PIN B7
+//#define LED_CAPS_LOCK_PIN B7
 #endif
 
 #define SCULPT_RIGHT_SPACE_KEY KC_SPC
 
 #define USB_POLLING_INTERVAL_MS 2
-#define QMK_KEYS_PER_SCAN 4
+//#define QMK_KEYS_PER_SCAN 1
 
 #define DEBUG_MATRIX_SCAN_RATE 1
 
+/* Bootmagic Lite key configuration */
+#define BOOTMAGIC_LITE_ROW 13
+#define BOOTMAGIC_LITE_COLUMN 1
+
+/* Enable by default the Caps Word feature by double tapping the shift key */
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 
 /*
  * Feature disable options
